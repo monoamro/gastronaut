@@ -11,7 +11,8 @@ const renderProducts = ({products, colorPalette}) => {
                 <GastroButton 
                 fullWidth primaryColor={colorPalette.contrastText} 
                 cotrastText={colorPalette.primaryColor} 
-                label={product}  
+                label={product} 
+
                 />
               </Grid>
             );
@@ -19,7 +20,7 @@ const renderProducts = ({products, colorPalette}) => {
     );
 }
 
-const RestaurantInfo = ({image, name, products, colorPalette}) => {
+const RestaurantInfo = ({image, name, products, colorPalette, restaurantId}) => {
 
 
     const renderProducts = (products, colorPalette) => {
@@ -31,7 +32,8 @@ const RestaurantInfo = ({image, name, products, colorPalette}) => {
               <Grid key={index} item xs={12}>
               <GastroButton fullWidth primaryColor={colorPalette.contrastText} 
                        cotrastText={colorPalette.primaryColor} 
-                       label={product}  
+                       label={product} 
+                       restaurantId={restaurantId} 
                        />
               </Grid>
             </>

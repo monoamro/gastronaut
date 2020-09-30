@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, withStyles} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, link } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -13,7 +13,13 @@ const useStyles = makeStyles(() => ({
 
 const GastroButton = (props) => {
     const classes = useStyles(props);
-    const {label} = props;
-    return <Button className={classes.root} {...props}>{label}</Button>
+    const {label, restaurantId} = props;
+    const link = 
+    (label === "reservation") ? "https://r.gastronaut.ai/" : 
+    (label === "menu") ? "https://menu.gastronaut.ai/" : 
+    (label === "voucher") ? "https://v.gastronaut.ai/" :
+    (label === "delivery") ? "https://menu.gastronaut.ai/" : ""
+
+    return <Button className={classes.root} href={link + restaurantId } {...props}>{label}</Button>
 }
 export default GastroButton;

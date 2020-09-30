@@ -9,11 +9,13 @@ import './App.css';
 function App() {
   const [restaurant, setRestaurant] = useState(null);
   const [language, setLanguage] = useState("de");
-  const neoHeidelbergApiCall = "https://api.gastronaut.ai/codeTest/neo-heidelberg";
-  const schillingRoofBarApiCall = "https://api.gastronaut.ai/codeTest/schillingroofbar";
+  // const restaurantId = "neo-heidelberg";
+  // Testing the other restaurant 
+  const restaurantId = "schillingroofbar";
+
 
   useEffect(() => {
-    axios.get(schillingRoofBarApiCall)
+    axios.get("https://api.gastronaut.ai/codeTest/" + restaurantId)
           .then((result) => {
 
             const {data} = result;
@@ -40,6 +42,7 @@ function App() {
           name={restaurant.name}
           products={restaurant.products}
           colorPalette={restaurant.colorPalette}
+          restaurantId={restaurantId}
           />
           <Footer />
           </> : <CircularProgress />
