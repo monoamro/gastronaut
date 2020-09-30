@@ -3,16 +3,18 @@ import Grid from '@material-ui/core/Grid';
 import GastroButton from '../GastroButton';
 import './index.css';
 
-const renderProducts = ({products, colorPalette}) => {
+const renderProducts = (products, colorPalette, labels, restaurantId) => {
     return (
-        products.map((product, index) => {
+        products && labels && products.map((product, index) => {
             return (
               <Grid key={index} item xs={12}>
                 <GastroButton 
-                fullWidth primaryColor={colorPalette.contrastText} 
+                fullWidth 
+                primaryColor={colorPalette.contrastText} 
                 cotrastText={colorPalette.primaryColor} 
-                label={product} 
-
+                product={product} 
+                labels={labels}
+                restaurantId={restaurantId}
                 />
               </Grid>
             );
@@ -20,28 +22,7 @@ const renderProducts = ({products, colorPalette}) => {
     );
 }
 
-const RestaurantInfo = ({image, name, products, colorPalette, restaurantId}) => {
-
-
-    const renderProducts = (products, colorPalette) => {
-        return (
-          products.map((product, index) => {
-            // const productLabel = product === "reservation" ? strings.reservationButton : product === "voucher" ? strings.voucherButton : product === "menu" ? strings.menuButton : product === "delivery" ? strings.deliveryButton : null
-            return (
-            <>
-              <Grid key={index} item xs={12}>
-              <GastroButton fullWidth primaryColor={colorPalette.contrastText} 
-                       cotrastText={colorPalette.primaryColor} 
-                       label={product} 
-                       restaurantId={restaurantId} 
-                       />
-              </Grid>
-            </>
-            );
-          })
-        )
-      }
-
+const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labels}) => {
     return (
         <Grid container item xs={12}>
           <Grid item xs={12}>
@@ -52,7 +33,7 @@ const RestaurantInfo = ({image, name, products, colorPalette, restaurantId}) => 
           </Grid>
           <Grid item xs={12} className={'products'}>
           {
-              renderProducts(products, colorPalette)
+              renderProducts(products, colorPalette, labels, restaurantId)
           }
           </Grid>
         </Grid>

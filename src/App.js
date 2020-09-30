@@ -8,24 +8,32 @@ import './App.css';
 
 function App() {
   const [restaurant, setRestaurant] = useState(null);
+  const [labels, setLabels] = useState(null)
   const [language, setLanguage] = useState("de");
   // const restaurantId = "neo-heidelberg";
   // Testing the other restaurant 
   const restaurantId = "schillingroofbar";
 
-
+// Calls restaurant API for info 
   useEffect(() => {
-    axios.get("https://api.gastronaut.ai/codeTest/" + restaurantId)
-          .then((result) => {
-
-            const {data} = result;
-            console.log("data", data);
-            const {logo, link, image, events, regularHours, colorPalette, products, name, homeAddress} = data;
-            setRestaurant({logo, link, image, events, regularHours, colorPalette, products, name, homeAddress}); 
-            console.log(restaurant);
-          })
-          .catch((e) => {console.log(e)})
+    axios.get(`https://api.gastronaut.ai/codeTest/${restaurantId}`)
+    .then((response) => {
+      const {data} = response;
+      const {logo, link, image, events, regularHours, colorPalette, products, name, homeAddress} = data;
+      setRestaurant({logo, link, image, events, regularHours, colorPalette, products, name, homeAddress}); 
+    })
+    .catch((e) => {console.log(e)})
   }, []);
+
+  // calls language API
+  useEffect(() => {
+    axios.get(`https://api.gastronaut.ai/v02/language/codeTest/${language}`)
+    .then((response) => {
+      const { data } = response;
+      setLabels(data);
+    })
+    .catch((e) => console.log(e))
+  }, [language]);
 
   return (
     <Grid container className={'content-container'}>
@@ -43,6 +51,7 @@ function App() {
           products={restaurant.products}
           colorPalette={restaurant.colorPalette}
           restaurantId={restaurantId}
+          labels={labels}
           />
           <Footer />
           </> : <CircularProgress />
