@@ -13,7 +13,7 @@ function App() {
   const schillingRoofBarApiCall = "https://api.gastronaut.ai/codeTest/schillingroofbar";
 
   useEffect(() => {
-    axios.get(neoHeidelbergApiCall)
+    axios.get(schillingRoofBarApiCall)
           .then((result) => {
 
             const {data} = result;
@@ -35,8 +35,11 @@ function App() {
           language={language} 
           setSelectedLang={(val) => setLanguage(val)}
           /> 
-          <RestaurantInfo 
-        
+          <RestaurantInfo
+          image={restaurant.image} 
+          name={restaurant.name}
+          products={restaurant.products}
+          colorPalette={restaurant.colorPalette}
           />
           <Footer />
           </> : <CircularProgress />
