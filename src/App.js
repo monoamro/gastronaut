@@ -10,9 +10,9 @@ function App() {
   const [restaurant, setRestaurant] = useState(null);
   const [labels, setLabels] = useState(null)
   const [language, setLanguage] = useState("de");
-  // const restaurantId = "neo-heidelberg";
+  const restaurantId = "neo-heidelberg";
   // Testing the other restaurant 
-  const restaurantId = "schillingroofbar";
+  // const restaurantId = "schillingroofbar";
 
 // Calls restaurant API for info 
   useEffect(() => {
@@ -50,6 +50,8 @@ function App() {
           name={restaurant.name}
           products={restaurant.products}
           colorPalette={restaurant.colorPalette}
+          events={restaurant.events}
+          regularHours={restaurant.regularHours}
           restaurantId={restaurantId}
           labels={labels}
           />
