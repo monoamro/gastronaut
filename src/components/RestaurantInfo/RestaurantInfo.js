@@ -25,15 +25,29 @@ const renderProducts = (products, colorPalette, labels, restaurantId) => {
     );
 }
 
-const renderEvent = (eventSameDay, regularHours, colorPalette, index, labels) => {
+const renderEvent = (event, regularHours, colorPalette, index, labels) => {
+    const formattedToday = moment().format("YYYY-MM-DD");
+    const eventDateValue = moment(event.date).diff(moment(formattedToday), 'days') === 0 ? labels.date.today : moment(event.date).diff(moment(formattedToday), 'days') === 1 ? labels.date.tomorrow : moment(event.date).format("ddd. DD. MM. YY");
     return (
-    <h1>event</h1>
+    <Grid item xs={5}>
+        {eventDateValue}
+    </Grid>
     )
 }
 
-const renderDay = (index, regularHours, labels, colorPalette) => {
+const renderDay = (index, regularHours, labels, colorPalette, dayDateValue) => {
     return (
-        <h1>day</h1>
+        <Grid container >
+            <Grid item xs={5}>
+                {dayDateValue}
+            </Grid>
+            <Grid item xs={3}>
+                
+            </Grid>
+            <Grid item xs={4}>
+                
+            </Grid>
+        </Grid>
     )
 }
 // Takes all events after 6 days from today
@@ -53,10 +67,11 @@ const renderListItem = (events, regularHours, colorPalette, labels) => {
             const dayDate = moment().add(index, 'days');
             const formattedDayDate = moment(dayDate).format('YYYY-MM-DD');
             const eventSameDay = _.find(events, (event) => event.date === formattedDayDate);
+            const dayDateValue = index === 0 ? labels.date.today : index === 1 ? labels.date.tomorrow : moment().add(index, 'days').format("ddd. DD. MM. YY");
             if (eventSameDay) {
                 return renderEvent(eventSameDay, regularHours, colorPalette, index, labels)
             } else {
-                return renderDay(index, regularHours, labels, colorPalette)
+                return renderDay(index, regularHours, labels, colorPalette, dayDateValue)
             }
         })
     )
@@ -66,7 +81,6 @@ const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labe
     // Testing if event is in the first 6-days
     const adjustedEvents = [{date: '2020-10-14', title: 'test', status: 'closed', id: 10}, ...events]
     const filteredFutureEvents = getFutureEvents(adjustedEvents);
-
     // const filteredFutureEvents = getFutureEvents(events);
     return (
         <Grid container item xs={12}>
@@ -76,9 +90,8 @@ const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labe
           <Grid item xs={12} className="event">
             {/* renders the first 6 days including events */}
             {/* {renderListItem(events, regularHours, colorPalette, labels)} */}
-            {// Testing if event is in the first 6-days
-            renderListItem(adjustedEvents, regularHours, colorPalette, labels)
-            }
+            {/* testing the first 6 days including events */}
+            {renderListItem(adjustedEvents, regularHours, colorPalette, labels)}
             {/* {if there are events after the 6 days this shows "..."} */}
             {filteredFutureEvents && filteredFutureEvents.length > 0 && <Grid className={'align-left'} item xs={12}>...</Grid>}
             {/* this shows events after the first 6 days */}

@@ -4,6 +4,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import RestaurantInfo from './components/RestaurantInfo';
 import axios from 'axios';
+import moment from 'moment';
+import 'moment/locale/de'
 import './App.css';
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
       setLabels(data);
     })
     .catch((e) => console.log(e))
+    moment.locale(language)
   }, [language]);
 
   return (
