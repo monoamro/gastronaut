@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Grid,CircularProgress} from '@material-ui/core';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import RestaurantInfo from './components/RestaurantInfo';
@@ -15,31 +15,33 @@ function App() {
   useEffect(() => {
     axios.get(neoHeidelbergApiCall)
           .then((result) => {
+
             const {data} = result;
+            console.log("data", data);
             const {logo, link, image, events, regularHours, colorPalette, products, name, homeAddress} = data;
             setRestaurant({logo, link, image, events, regularHours, colorPalette, products, name, homeAddress}); 
-          }, [])
+            console.log(restaurant);
+          })
           .catch((e) => {console.log(e)})
   }, []);
-  
-  console.log(restaurant);
 
   return (
-    <Grid container>
-        <Header 
-        name={restaurant.name} 
-        logo={restaurant.logo} 
-        link={restaurant.link} 
-        language={language} 
-        setSelectedLanguage={(selLang) => setLanguage(selLang)}
-        />
-      <Grid container item>
-        <RestaurantInfo></RestaurantInfo>
+    <Grid container className={'content-container'}>
+        {
+          restaurant && language ? <>
+          <Header 
+          logo={restaurant.logo} 
+          link={restaurant.link} 
+          language={language} 
+          setSelectedLang={(val) => setLanguage(val)}
+          /> 
+          <RestaurantInfo 
+        
+          />
+          <Footer />
+          </> : <CircularProgress />
+        }
       </Grid>
-      <Grid container item>
-        <Footer></Footer>
-      </Grid>
-    </Grid>
   );
 }
 
