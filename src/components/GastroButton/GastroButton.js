@@ -1,8 +1,7 @@
 import React from "react";
-import {Button, withStyles} from '@material-ui/core'
-import { makeStyles, link } from '@material-ui/core/styles';
+import {Button} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import transitions from "@material-ui/core/styles/transitions";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -13,7 +12,6 @@ const useStyles = makeStyles(() => ({
         fontSize: props => props.fontSize,
         fontFamily: '"Ubuntu", sans-serif',
         borderRadius: '8px',
-        transition: `none`
     },
   }));
 

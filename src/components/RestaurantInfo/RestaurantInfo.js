@@ -55,7 +55,6 @@ const renderEvent = (event, neededDays, colorPalette, index, labels, restaurantI
 }
 
 const renderDay = (index, neededDays, labels, colorPalette, dayDateValue, dayDate, restaurantId) => {
-    console.log('render', neededDays)
     return (
         <Grid container alignItems="center" className="item" >
             <Grid item xs={4}>

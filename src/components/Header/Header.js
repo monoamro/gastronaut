@@ -7,7 +7,7 @@ const Header = ({name, logo, link, language, setSelectedLang}) => {
     return (
         <Grid container item xs={12} justify={"space-between"} alignItems={"center"} className="header">
             <Grid item >
-                <a href={link} target="_blank">
+                <a href={link} target="blank">
                     <img src={logo} alt={name} className="restaurant-logo"/>
                 </a>
             </Grid>
