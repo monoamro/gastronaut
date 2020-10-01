@@ -12,7 +12,14 @@ const useStyles = makeStyles(() => ({
         fontSize: props => props.fontSize,
         fontFamily: '"Ubuntu", sans-serif',
         borderRadius: '8px',
+        "&:hover": {
+            border: props => `${props.primaryColor} 1px solid`,
+            color: props => props.primaryColor,
+            backgroundColor: props => props.cotrastText,
+        }
     },
+
+
   }));
 
 const GastroButton = (props) => {

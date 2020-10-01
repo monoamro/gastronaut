@@ -56,7 +56,7 @@ const renderEvent = (event, neededDays, colorPalette, index, labels, restaurantI
 
 const renderDay = (index, neededDays, labels, colorPalette, dayDateValue, dayDate, restaurantId) => {
     return (
-        <Grid container alignItems="center" className="item" >
+        <Grid container alignItems="center" className="item" key={index} >
             <Grid item xs={4}>
                 {dayDateValue}
             </Grid>
@@ -122,7 +122,7 @@ const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labe
           </Grid>
           <Grid item xs={12} className="event">
             {/* RENDERS the first 6 days including events */}
-            {renderListItem(events, regularHours, colorPalette, labels)}
+            {renderListItem(events, regularHours, colorPalette, labels, restaurantId)}
 
             {/* TESTS the first 6 days including events */}
             {/* {renderListItem(adjustedEvents, regularHours, colorPalette, labels, restaurantId)} */}

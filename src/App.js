@@ -12,9 +12,11 @@ function App() {
   const [restaurant, setRestaurant] = useState(null);
   const [labels, setLabels] = useState(null)
   const [language, setLanguage] = useState("de");
-  const restaurantId = "neo-heidelberg";
-  // Testing the other restaurant 
-  // const restaurantId = "schillingroofbar";
+
+  // CHOOSE RESTAURANT NAME:
+
+  // const restaurantId = "neo-heidelberg";
+  const restaurantId = "schillingroofbar";
 
 // Calls restaurant API for info 
   useEffect(() => {
