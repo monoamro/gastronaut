@@ -1,6 +1,8 @@
 import React from "react";
 import {Button, withStyles} from '@material-ui/core'
 import { makeStyles, link } from '@material-ui/core/styles';
+import moment from 'moment';
+import transitions from "@material-ui/core/styles/transitions";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -8,7 +10,10 @@ const useStyles = makeStyles(() => ({
         border: props => `${props.primaryColor} 1px solid`,
         color: props => props.primaryColor,
         backgroundColor: props => props.cotrastText,
-        fontSize: props => props.fontSize
+        fontSize: props => props.fontSize,
+        fontFamily: '"Ubuntu", sans-serif',
+        borderRadius: '8px',
+        transition: `none`
     },
   }));
 
@@ -18,25 +23,28 @@ const GastroButton = (props) => {
     let link;
     let label;
     if (product === "reservation") {
-        link = "https://r.gastronaut.ai/";
+        link = `https://r.gastronaut.ai/${restaurantId}`;
         label = labels.reservationButton;
     } else if (product === "menu") {
-        link = "https://menu.gastronaut.ai/";
+        link = `https://menu.gastronaut.ai/${restaurantId}`;
         label = labels.menuButton;
     } else if (product === "voucher") { 
-        link = "https://v.gastronaut.ai/" 
+        link = `https://v.gastronaut.ai/${restaurantId}` 
         label = labels.voucherButton;
     } else if (product === "delivery") { 
-        link = "https://menu.gastronaut.ai/"
+        link = `https://menu.gastronaut.ai/${restaurantId}`;
         label = labels.deliveryButton;
     } else if (product === "reserveSmall") {
-        link = "https://menu.gastronaut.ai/"
+        link = `https://r.gastronaut.ai/${restaurantId}/?date=${moment(props.date).format('YYYY-MM-DD')}`;
         label = labels.reservationButtonSmall;
-    } else if (product === "ticket") {
-        link = "https://menu.gastronaut.ai/"
-        label = labels.ticketButton;
+    } else if (product.status === "BOOKABLE") {
+        link = `https://t.gastronaut.ai/${restaurantId}/${product.id}`
+        label = `${labels.ticketButton}`;
+    } else if (product.status === "CLOSED") {
+        link = ``
+        label = `${labels.closed}`;
     }
 
-    return <Button className={classes.root} href={link + restaurantId } {...props}>{label}</Button>
+    return <Button className={classes.root} href={link} {...props}>{label}</Button>
 }
 export default GastroButton;

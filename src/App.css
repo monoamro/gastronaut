@@ -41,6 +41,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 16px 20px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
 }

@@ -26,44 +26,46 @@ const renderProducts = (products, colorPalette, labels, restaurantId) => {
     );
 }
 
-const renderEvent = (event, regularHours, colorPalette, index, labels, restaurantId) => {
+const renderEvent = (event, neededDays, colorPalette, index, labels, restaurantId) => {
     const formattedToday = moment().format("YYYY-MM-DD");
     const eventDateValue = moment(event.date).diff(moment(formattedToday), 'days') === 0 ? labels.date.today : moment(event.date).diff(moment(formattedToday), 'days') === 1 ? labels.date.tomorrow : moment(event.date).format("ddd. DD. MM. YY");
     return (
-        <Grid container alignItems="center" className="item" >
-            <Grid item xs={4}>
-                {eventDateValue}
+        labels && 
+            <Grid container alignItems="center" className="item" >
+                <Grid item xs={4}>
+                    {eventDateValue}
+                </Grid>
+                <Grid item xs={4}>
+                    {event.available ? event.title : labels.closed }
+                </Grid>
+                <Grid item xs={4}>
+                    {event.available &&
+                    <GastroButton
+                    fullWidth
+                    primaryColor={colorPalette.contrastText} 
+                    cotrastText={colorPalette.primaryColor}
+                    fontSize="12px"
+                    labels={labels}
+                    restaurantId={restaurantId}
+                    product={event}
+                    />}
+                </Grid>
             </Grid>
-            <Grid item xs={4}>
-                {event.title}
-            </Grid>
-            <Grid item xs={4}>
-                { labels &&
-                <GastroButton
-                fullWidth
-                primaryColor={colorPalette.contrastText} 
-                cotrastText={colorPalette.primaryColor}
-                fontSize="12px"
-                labels={labels}
-                restaurantId={restaurantId}
-                product={"ticket"}
-                />}
-            </Grid>
-        </Grid>
     )
 }
 
-const renderDay = (index, regularHours, labels, colorPalette, dayDateValue, restaurantId) => {
+const renderDay = (index, neededDays, labels, colorPalette, dayDateValue, dayDate, restaurantId) => {
+    console.log('render', neededDays)
     return (
         <Grid container alignItems="center" className="item" >
             <Grid item xs={4}>
                 {dayDateValue}
             </Grid>
             <Grid item xs={4}>
-                {regularHours[index] || labels.closed }
+                {neededDays[index] || labels.closed }
             </Grid>
             <Grid item xs={4}>
-                {regularHours[index] && 
+                {neededDays[index] && 
                     <GastroButton
                     fullWidth 
                     primaryColor={colorPalette.primaryColor} 
@@ -72,6 +74,7 @@ const renderDay = (index, regularHours, labels, colorPalette, dayDateValue, rest
                     labels={labels}
                     restaurantId={restaurantId}
                     product={"reserveSmall"}
+                    date={dayDate}
                     />
                 }
             </Grid>
@@ -89,18 +92,21 @@ const getFutureEvents = (events) => {
 }
 
 const renderListItem = (events, regularHours, colorPalette, labels, restaurantId) => {
-    const neededDays = regularHours.slice(0, 6);
+    
+    const firstDays = regularHours.slice((moment().day() - 1 ), -1);
+    const secondDays = regularHours.slice(0, (6 - firstDays.length))
+    const neededDays = firstDays.concat(secondDays);
+    console.log(regularHours)
     return (
         labels && neededDays.map((day, index) => {
-            console.log(labels)
             const dayDate = moment().add(index, 'days');
             const formattedDayDate = moment(dayDate).format('YYYY-MM-DD');
             const eventSameDay = _.find(events, (event) => event.date === formattedDayDate);
             const dayDateValue = index === 0 ? labels.date.today : index === 1 ? labels.date.tomorrow : moment().add(index, 'days').format("ddd. DD. MM. YY");
             if (eventSameDay) {
-                return renderEvent(eventSameDay, regularHours, colorPalette, index, labels, restaurantId)
+                return renderEvent(eventSameDay, neededDays, colorPalette, index, labels, restaurantId)
             } else {
-                return renderDay(index, regularHours, labels, colorPalette, dayDateValue, restaurantId)
+                return renderDay(index, neededDays, labels, colorPalette, dayDateValue, dayDate, restaurantId)
             }
         })
     )
@@ -108,7 +114,7 @@ const renderListItem = (events, regularHours, colorPalette, labels, restaurantId
 
 const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labels, events, regularHours}) => {
     // Testing if event is in the first 6-days
-    const adjustedEvents = [{date: '2020-10-14', title: 'test', status: 'closed', id: 10}, ...events]
+    const adjustedEvents = [{date: '2020-10-14', title: 'Parakuya', status: 'BOOKABLE', id: 10, available: true}, ...events]
     const filteredFutureEvents = getFutureEvents(adjustedEvents);
     // const filteredFutureEvents = getFutureEvents(events);
     return (
