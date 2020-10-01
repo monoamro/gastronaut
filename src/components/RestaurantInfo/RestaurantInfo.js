@@ -96,13 +96,12 @@ const renderListItem = (events, regularHours, colorPalette, labels, restaurantId
     const firstDays = regularHours.slice((moment().day() - 1 ), -1);
     const secondDays = regularHours.slice(0, (6 - firstDays.length))
     const neededDays = firstDays.concat(secondDays);
-    console.log(regularHours)
     return (
         labels && neededDays.map((day, index) => {
             const dayDate = moment().add(index, 'days');
             const formattedDayDate = moment(dayDate).format('YYYY-MM-DD');
             const eventSameDay = _.find(events, (event) => event.date === formattedDayDate);
-            const dayDateValue = index === 0 ? labels.date.today : index === 1 ? labels.date.tomorrow : moment().add(index, 'days').format("ddd. DD. MM. YY");
+            const dayDateValue = index === 0 ? labels.date.today : index === 1 ? labels.date.tomorrow : moment().add(index, 'days').format("ddd DD. MM. YY");
             if (eventSameDay) {
                 return renderEvent(eventSameDay, neededDays, colorPalette, index, labels, restaurantId)
             } else {
