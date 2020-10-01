@@ -18,6 +18,7 @@ const renderProducts = (products, colorPalette, labels, restaurantId) => {
                 product={product} 
                 labels={labels}
                 restaurantId={restaurantId}
+                fontSize="16px"
                 />
               </Grid>
             );
@@ -34,14 +35,15 @@ const renderEvent = (event, regularHours, colorPalette, index, labels, restauran
                 {eventDateValue}
             </Grid>
             <Grid item xs={4}>
-                event
+                {event.title}
             </Grid>
             <Grid item xs={4}>
                 { labels &&
                 <GastroButton
                 fullWidth
-                primaryColor={colorPalette.primaryColor} 
-                cotrastText={colorPalette.contrastText} 
+                primaryColor={colorPalette.contrastText} 
+                cotrastText={colorPalette.primaryColor}
+                fontSize="12px"
                 labels={labels}
                 restaurantId={restaurantId}
                 product={"ticket"}
@@ -64,8 +66,9 @@ const renderDay = (index, regularHours, labels, colorPalette, dayDateValue, rest
                 {regularHours[index] && 
                     <GastroButton
                     fullWidth 
-                    primaryColor={colorPalette.contrastText} 
-                    cotrastText={colorPalette.primaryColor} 
+                    primaryColor={colorPalette.primaryColor} 
+                    cotrastText={colorPalette.contrastText}
+                    fontSize="12px"
                     labels={labels}
                     restaurantId={restaurantId}
                     product={"reserveSmall"}

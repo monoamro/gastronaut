@@ -5,10 +5,10 @@ import { makeStyles, link } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
     root: {
         margin: `8px auto`,
-        borderColor: props => props.primaryColor,
+        border: props => `${props.primaryColor} 1px solid`,
         color: props => props.primaryColor,
         backgroundColor: props => props.cotrastText,
-        fontSize: `12px`,
+        fontSize: props => props.fontSize
     },
   }));
 
