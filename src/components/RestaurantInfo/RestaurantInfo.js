@@ -25,27 +25,52 @@ const renderProducts = (products, colorPalette, labels, restaurantId) => {
     );
 }
 
-const renderEvent = (event, regularHours, colorPalette, index, labels) => {
+const renderEvent = (event, regularHours, colorPalette, index, labels, restaurantId) => {
     const formattedToday = moment().format("YYYY-MM-DD");
     const eventDateValue = moment(event.date).diff(moment(formattedToday), 'days') === 0 ? labels.date.today : moment(event.date).diff(moment(formattedToday), 'days') === 1 ? labels.date.tomorrow : moment(event.date).format("ddd. DD. MM. YY");
     return (
-    <Grid item xs={5}>
-        {eventDateValue}
-    </Grid>
+        <Grid container alignItems="center" className="item" >
+            <Grid item xs={4}>
+                {eventDateValue}
+            </Grid>
+            <Grid item xs={4}>
+                event
+            </Grid>
+            <Grid item xs={4}>
+                { labels &&
+                <GastroButton
+                fullWidth
+                primaryColor={colorPalette.primaryColor} 
+                cotrastText={colorPalette.contrastText} 
+                labels={labels}
+                restaurantId={restaurantId}
+                product={"ticket"}
+                />}
+            </Grid>
+        </Grid>
     )
 }
 
-const renderDay = (index, regularHours, labels, colorPalette, dayDateValue) => {
+const renderDay = (index, regularHours, labels, colorPalette, dayDateValue, restaurantId) => {
     return (
-        <Grid container >
-            <Grid item xs={5}>
+        <Grid container alignItems="center" className="item" >
+            <Grid item xs={4}>
                 {dayDateValue}
             </Grid>
-            <Grid item xs={3}>
-                
+            <Grid item xs={4}>
+                {regularHours[index] || labels.closed }
             </Grid>
             <Grid item xs={4}>
-                
+                {regularHours[index] && 
+                    <GastroButton
+                    fullWidth 
+                    primaryColor={colorPalette.contrastText} 
+                    cotrastText={colorPalette.primaryColor} 
+                    labels={labels}
+                    restaurantId={restaurantId}
+                    product={"reserveSmall"}
+                    />
+                }
             </Grid>
         </Grid>
     )
@@ -60,18 +85,19 @@ const getFutureEvents = (events) => {
     return filteredEvents;
 }
 
-const renderListItem = (events, regularHours, colorPalette, labels) => {
+const renderListItem = (events, regularHours, colorPalette, labels, restaurantId) => {
     const neededDays = regularHours.slice(0, 6);
     return (
         labels && neededDays.map((day, index) => {
+            console.log(labels)
             const dayDate = moment().add(index, 'days');
             const formattedDayDate = moment(dayDate).format('YYYY-MM-DD');
             const eventSameDay = _.find(events, (event) => event.date === formattedDayDate);
             const dayDateValue = index === 0 ? labels.date.today : index === 1 ? labels.date.tomorrow : moment().add(index, 'days').format("ddd. DD. MM. YY");
             if (eventSameDay) {
-                return renderEvent(eventSameDay, regularHours, colorPalette, index, labels)
+                return renderEvent(eventSameDay, regularHours, colorPalette, index, labels, restaurantId)
             } else {
-                return renderDay(index, regularHours, labels, colorPalette, dayDateValue)
+                return renderDay(index, regularHours, labels, colorPalette, dayDateValue, restaurantId)
             }
         })
     )
@@ -91,7 +117,7 @@ const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labe
             {/* renders the first 6 days including events */}
             {/* {renderListItem(events, regularHours, colorPalette, labels)} */}
             {/* testing the first 6 days including events */}
-            {renderListItem(adjustedEvents, regularHours, colorPalette, labels)}
+            {renderListItem(adjustedEvents, regularHours, colorPalette, labels, restaurantId)}
             {/* {if there are events after the 6 days this shows "..."} */}
             {filteredFutureEvents && filteredFutureEvents.length > 0 && <Grid className={'align-left'} item xs={12}>...</Grid>}
             {/* this shows events after the first 6 days */}

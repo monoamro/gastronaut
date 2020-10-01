@@ -7,7 +7,8 @@ const useStyles = makeStyles(() => ({
         margin: `8px auto`,
         borderColor: props => props.primaryColor,
         color: props => props.primaryColor,
-        backgroundColor: props => props.cotrastText
+        backgroundColor: props => props.cotrastText,
+        fontSize: `12px`,
     },
   }));
 
@@ -28,6 +29,12 @@ const GastroButton = (props) => {
     } else if (product === "delivery") { 
         link = "https://menu.gastronaut.ai/"
         label = labels.deliveryButton;
+    } else if (product === "reserveSmall") {
+        link = "https://menu.gastronaut.ai/"
+        label = labels.reservationButtonSmall;
+    } else if (product === "ticket") {
+        link = "https://menu.gastronaut.ai/"
+        label = labels.ticketButton;
     }
 
     return <Button className={classes.root} href={link + restaurantId } {...props}>{label}</Button>

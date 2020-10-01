@@ -3,3 +3,11 @@
   height: 60vw;
   max-height: 400px;
 }
+
+.item {
+  height: 7vh;
+}
+
+.button-list {
+  font-size: 12px !important;
+}
