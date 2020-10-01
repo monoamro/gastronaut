@@ -113,22 +113,25 @@ const renderListItem = (events, regularHours, colorPalette, labels, restaurantId
 }
 
 const RestaurantInfo = ({image, name, products, colorPalette, restaurantId, labels, events, regularHours}) => {
-    // Testing if event is in the first 6-days
-    const adjustedEvents = [{date: '2020-10-14', title: 'Parakuya', status: 'BOOKABLE', id: 10, available: true}, ...events]
-    const filteredFutureEvents = getFutureEvents(adjustedEvents);
-    // const filteredFutureEvents = getFutureEvents(events);
+    // TESTING if event is in the first 6-days
+    // const adjustedEvents = [{date: '2020-10-14', title: 'Parakuya', status: 'BOOKABLE', id: 10, available: true}, ...events]
+    // const filteredFutureEvents = getFutureEvents(adjustedEvents);
+    const filteredFutureEvents = getFutureEvents(events);
     return (
         <Grid container item xs={12}>
           <Grid item xs={12}>
             <img src={image} alt={name} className="restaurant-image"/>
           </Grid>
           <Grid item xs={12} className="event">
-            {/* renders the first 6 days including events */}
-            {/* {renderListItem(events, regularHours, colorPalette, labels)} */}
-            {/* testing the first 6 days including events */}
-            {renderListItem(adjustedEvents, regularHours, colorPalette, labels, restaurantId)}
+            {/* RENDERS the first 6 days including events */}
+            {renderListItem(events, regularHours, colorPalette, labels)}
+
+            {/* TESTS the first 6 days including events */}
+            {/* {renderListItem(adjustedEvents, regularHours, colorPalette, labels, restaurantId)} */}
+
             {/* {if there are events after the 6 days this shows "..."} */}
             {filteredFutureEvents && filteredFutureEvents.length > 0 && <Grid className={'align-left'} item xs={12}>...</Grid>}
+
             {/* this shows events after the first 6 days */}
             {filteredFutureEvents && filteredFutureEvents.map((event, index) => renderEvent(event, regularHours, colorPalette, index, labels))}
           </Grid>
