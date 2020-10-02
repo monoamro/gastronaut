@@ -8,15 +8,12 @@ import moment from 'moment';
 import 'moment/locale/de'
 import './App.css';
 
-function App() {
+function App(props) {
+
   const [restaurant, setRestaurant] = useState(null);
   const [labels, setLabels] = useState(null)
   const [language, setLanguage] = useState("de");
-
-  // CHOOSE RESTAURANT NAME:
-
-  // const restaurantId = "neo-heidelberg";
-  const restaurantId = "schillingroofbar";
+  const restaurantId = props.match.params.restaurantId;
 
 // Calls restaurant API for info 
   useEffect(() => {
