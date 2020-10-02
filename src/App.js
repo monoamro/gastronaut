@@ -32,7 +32,6 @@ useEffect(() => {
   useEffect(() => {
     axios.get(`https://api.gastronaut.ai/codeTest/${restaurantId}`)
     .then((response) => {
-      console.log(response)
       const {data} = response;
       const {logo, link, image, events, regularHours, colorPalette, products, name, homeAddress} = data;
       setRestaurant({logo, link, image, events, regularHours, colorPalette, products, name, homeAddress}); 
@@ -40,7 +39,7 @@ useEffect(() => {
     .catch((e) => { 
       setError(e);
       })
-  }, []);
+  }, [restaurantId]);
 
   const renderAlert = () => {
     if (!error) return null;

@@ -18,7 +18,6 @@ const NotFound = () => {
             .then((response) => {
             const { data } = response;
             setLabels(data);
-            console.log(labels)
             })
             .catch((e) => console.log(e))
             moment.locale(language)
