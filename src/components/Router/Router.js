@@ -8,7 +8,6 @@ const Router = () => {
     return (
     <BrowserRouter>
         <Switch>
-            <Route exact path='/' component={NotFound} />
             <Route exact path='/:restaurantId' component={App} />
             <Route component={NotFound} />
         </Switch>
