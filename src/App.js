@@ -11,7 +11,6 @@ import LanguageToggle from './components/LanguageToggle';
 import { Alert } from '@material-ui/lab';
 
 function App(props) {
-  console.log(navigator.languages)
   let defaultLanguage;
   navigator.languages.map((lang) => {
     lang.includes('de') ? defaultLanguage = 'de' : defaultLanguage = 'en'
