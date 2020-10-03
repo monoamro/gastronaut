@@ -36,18 +36,17 @@ useEffect(() => {
       const {logo, link, image, events, regularHours, colorPalette, products, name, homeAddress} = data;
       setRestaurant({logo, link, image, events, regularHours, colorPalette, products, name, homeAddress}); 
     })
-    .catch((e) => { 
-      setError(e);
+    .catch((error) => {
+      setError(error.response.data.message);
       })
   }, [restaurantId]);
 
   const renderAlert = () => {
-    if (!error) return null;
     return (
       labels && 
       <Grid container >
           <Grid item xs={11}>
-              <Alert severity="error">{labels.restaurantNotFound}</Alert> 
+              <Alert severity="error">{error}</Alert> 
           </Grid>
           <Grid item xs={1} className="language-toggle">
               <LanguageToggle language={language} setlanguage={(language) => setLanguage(language)} />
@@ -64,7 +63,6 @@ useEffect(() => {
   } else {
     return (
       <Grid container className={'content-container'}>
-          { renderAlert() }
           {
             restaurant && language ? <>
             <Header 

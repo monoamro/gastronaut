@@ -6,7 +6,7 @@ import Router from './components/Router';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router key={2}/>
+    <Router />
   </React.StrictMode>,
   document.getElementById('root')
 );
