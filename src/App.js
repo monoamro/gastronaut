@@ -43,7 +43,6 @@ useEffect(() => {
 
   const renderAlert = () => {
     return (
-      labels && 
       <Grid container >
           <Grid item xs={11}>
               <Alert severity="error">{error}</Alert> 
