@@ -11,11 +11,15 @@ import LanguageToggle from './components/LanguageToggle';
 import { Alert } from '@material-ui/lab';
 
 function App(props) {
-
+  console.log(navigator.languages)
+  let defaultLanguage;
+  navigator.languages.map((lang) => {
+    lang.includes('de') ? defaultLanguage = 'de' : defaultLanguage = 'en'
+    })
   const [restaurant, setRestaurant] = useState(null);
   const [labels, setLabels] = useState(null)
   const [error, setError] = useState(null)
-  const [language, setLanguage] = useState("de");
+  const [language, setLanguage] = useState(defaultLanguage);
   const restaurantId = props.match.params.restaurantId;
 
 // Calls restaurant API for info 
