@@ -25,7 +25,7 @@ useEffect(() => {
       const { data } = response;
       setLabels(data);
     })
-    .catch((e) => console.log(e))
+    .catch((error) => setError(error.response.data.message))
     moment.locale(language)
   }, [language]);
 
@@ -40,6 +40,8 @@ useEffect(() => {
       setError(error.response.data.message);
       })
   }, [restaurantId]);
+
+  // Renders alert message using Material UI Alern component
 
   const renderAlert = () => {
     return (
